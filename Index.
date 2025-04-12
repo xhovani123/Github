@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lokacioni Im</title>
+</head>
+<body>
+  <h2>Duke marrë lokacionin...</h2>
+  <p id="status">Kërkohet leje për vendndodhje.</p>
+  <a id="mapLink" href="#" target="_blank" style="display:none;">Shiko në Google Maps</a>
+
+  <script>
+    function success(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+      const link = document.getElementById('mapLink');
+
+      link.href = mapUrl;
+      link.textContent = `Shiko Lokacionin (${lat}, ${lon})`;
+      link.style.display = 'inline';
+
+      document.getElementById('status').textContent = 'Lokacioni u gjet me sukses!';
+    }
+
+    function error(err) {
+      document.getElementById('status').textContent = 'Nuk u arrit të merret lokacioni.';
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success, error);
+    } else {
+      document.getElementById('status').textContent = 'Shfletuesi nuk e përkrah Geolocation.';
+    }
+  </script>
+</body>
+</html>
